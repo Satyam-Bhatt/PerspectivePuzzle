@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Moveit : MonoBehaviour
 {
-    private Vector3[] movePosition;
+    private Vector3[] movePosition = new Vector3[3];
 
     public bool s1 = false;
     public bool s2 = false;
@@ -24,7 +24,7 @@ public class Moveit : MonoBehaviour
 
         for(int i = 0; i < transform.childCount; i++)
         {
-            movePosition[i] = transform.GetChild(i).transform.position;
+            movePosition[i] = transform.GetChild(i).position;
         }
     }
 
@@ -46,12 +46,35 @@ public class Moveit : MonoBehaviour
 
         if(s1)
         {
-            transform.position = Vector3.Lerp(transform.position, movePosition[1], 10 * Time.deltaTime);
+            objectsToMove[0].position = Vector3.Lerp(objectsToMove[0].position, movePosition[0], 10 * Time.deltaTime);
         }
 
-        if (Vector2.Distance(this.transform.position, movePosition[1]) < 0.1f && s1)
+        if (s2)
+        {
+            objectsToMove[1].position = Vector3.Lerp(objectsToMove[1].position, movePosition[1], 10 * Time.deltaTime);
+        }
+
+        if (s3)
+        {
+            objectsToMove[2].position = Vector3.Lerp(objectsToMove[2].position, movePosition[2], 10 * Time.deltaTime);
+        }
+
+        if (Vector2.Distance(objectsToMove[0].position, movePosition[0]) < 0.1f && s1)
         {
             show[0].SetActive(true);
+            objectsToMove[0].gameObject.SetActive(false);
+        }
+
+        if (Vector2.Distance(objectsToMove[1].position, movePosition[1]) < 0.1f && s2)
+        {
+            show[1].SetActive(true);
+            objectsToMove[1].gameObject.SetActive(false);
+        }
+
+        if (Vector2.Distance(objectsToMove[2].position, movePosition[2]) < 0.1f && s3)
+        {
+            show[2].SetActive(true);
+            objectsToMove[2].gameObject.SetActive(false);
         }
     }
 }
