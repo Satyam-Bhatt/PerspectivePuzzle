@@ -20,7 +20,10 @@ public class CameraRotator : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {       
+    {
+        if (!Input.GetMouseButton(0)) return;
+
+
         this.x += Input.GetAxis("Mouse X");
         this.y += Input.GetAxis("Mouse Y");
 
@@ -28,7 +31,8 @@ public class CameraRotator : MonoBehaviour
 
         this.transform.rotation = rot1;
 
-        Vector3 direction = Quaternion.Euler(this.y, this.x, 0) * posiStore;
+       // Vector3 direction = Quaternion.Euler(this.y, this.x, 0) * posiStore;
+        Vector3 direction = this.transform.rotation * posiStore;
         this.transform.position = direction;
     }
 }
